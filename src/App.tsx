@@ -8,6 +8,7 @@ import FAQ from "./pages/FAQ";
 import GetStarted from "./pages/GetStarted";
 import CreateID from "./pages/CreateID";
 import Login from "./pages/Login";
+import FreeAnalysis from "./pages/FreeAnalysis";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -21,6 +22,7 @@ const App = () => (
         <Routes>
           <Route path="/" element={<LandingPage />} />
           <Route path="/faq" element={<FAQ />} />
+          <Route path="/free-analysis" element={<FreeAnalysis />} />
           <Route path="/get-started" element={<GetStarted />} />
           <Route path="/create-id" element={<CreateID />} />
           <Route path="/login" element={<Login />} />

@@ -1,6 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Heart, FileText, Plus, Upload, Brain, Download } from 'lucide-react';
+import { Heart, FileText, Plus, Upload, Brain, Download, ArrowRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import Header from '@/components/Header';
 
@@ -167,10 +167,10 @@ const LandingPage = () => {
                       <Button 
                         variant="outline" 
                         size="sm"
-                        onClick={() => navigate('/get-started')}
+                        onClick={() => navigate('/free-analysis')}
                         className="hover:bg-secondary/50 transition-all duration-300"
                       >
-                        Get Started
+                        Try Free Analysis
                       </Button>
                     )}
                   </CardContent>
@@ -239,10 +239,11 @@ const LandingPage = () => {
                 <Button 
                   size="lg"
                   variant="hero"
-                  onClick={() => navigate('/get-started')}
+                  onClick={() => navigate('/free-analysis')}
                   className="shadow-elegant hover:shadow-glow transition-all duration-300"
                 >
-                  Start Your Free Trial
+                  Start Free Analysis
+                  <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
               </CardContent>
             </Card>
