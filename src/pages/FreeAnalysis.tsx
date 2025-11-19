@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Upload, FileText, Download, Loader2, CheckCircle } from 'lucide-react';
@@ -11,6 +11,8 @@ const FreeAnalysis = () => {
   const [file, setFile] = useState<File | null>(null);
   const [analyzing, setAnalyzing] = useState(false);
   const [analysis, setAnalysis] = useState<string | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const fileChangeInputRef = useRef<HTMLInputElement>(null);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target.files?.[0];
@@ -198,19 +200,23 @@ Disclaimer: This analysis is for informational purposes only and does not consti
                   <p className="text-sm text-muted-foreground mb-4">
                     Supports PDF, DOC, DOCX, and TXT files
                   </p>
-                  <label htmlFor="file-upload" className="cursor-pointer">
-                    <Button variant="hero" className="shadow-elegant hover:shadow-glow">
+                  <div>
+                    <Button 
+                      variant="hero" 
+                      className="shadow-elegant hover:shadow-glow"
+                      onClick={() => fileInputRef.current?.click()}
+                    >
                       <Upload className="mr-2 h-4 w-4" />
                       Select File
                     </Button>
                     <input
-                      id="file-upload"
+                      ref={fileInputRef}
                       type="file"
                       className="hidden"
                       accept=".pdf,.doc,.docx,.txt"
                       onChange={handleFileChange}
                     />
-                  </label>
+                  </div>
                 </div>
               ) : (
                 <div className="space-y-4">
@@ -242,16 +248,19 @@ Disclaimer: This analysis is for informational purposes only and does not consti
                       )}
                     </Button>
                     
-                    <label htmlFor="file-upload-change" className="cursor-pointer">
-                      <Button variant="outline">Change File</Button>
-                      <input
-                        id="file-upload-change"
-                        type="file"
-                        className="hidden"
-                        accept=".pdf,.doc,.docx,.txt"
-                        onChange={handleFileChange}
-                      />
-                    </label>
+                    <Button 
+                      variant="outline"
+                      onClick={() => fileChangeInputRef.current?.click()}
+                    >
+                      Change File
+                    </Button>
+                    <input
+                      ref={fileChangeInputRef}
+                      type="file"
+                      className="hidden"
+                      accept=".pdf,.doc,.docx,.txt"
+                      onChange={handleFileChange}
+                    />
                   </div>
                 </div>
               )}
