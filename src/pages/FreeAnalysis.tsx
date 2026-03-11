@@ -5,6 +5,7 @@ import { Upload, FileText, Download, Loader2, CheckCircle } from 'lucide-react';
 import Header from '@/components/Header';
 import { useToast } from '@/hooks/use-toast';
 import jsPDF from 'jspdf';
+import { generateLegalAnalysis } from '@/utils/legalAnalysis';
 
 const FreeAnalysis = () => {
   const { toast } = useToast();
