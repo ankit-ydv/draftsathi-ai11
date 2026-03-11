@@ -52,23 +52,29 @@ const FreeAnalysis = () => {
     if (!file) return;
 
     setAnalyzing(true);
+    setStage(0);
     
     try {
       const text = await file.text();
-      
-      // Simulate Legal BERT processing time
-      await new Promise(resolve => setTimeout(resolve, 3000));
+
+      // Progress through stages with delays
+      for (let i = 0; i < ANALYSIS_STAGES.length; i++) {
+        setStage(i);
+        await new Promise(resolve => setTimeout(resolve, 600 + Math.random() * 400));
+      }
       
       const { report } = generateLegalAnalysis(text, file.name);
       
       setAnalysis(report);
       setAnalyzing(false);
+      setStage(0);
       toast({
         title: "Analysis complete",
         description: "Your document has been analyzed successfully",
       });
     } catch (error) {
       setAnalyzing(false);
+      setStage(0);
       toast({
         title: "Analysis failed",
         description: "There was an error analyzing your document",
