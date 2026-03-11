@@ -4,14 +4,25 @@ import { Button } from '@/components/ui/button';
 import { Upload, FileText, Download, Loader2, CheckCircle } from 'lucide-react';
 import Header from '@/components/Header';
 import { useToast } from '@/hooks/use-toast';
+import { Progress } from '@/components/ui/progress';
 import jsPDF from 'jspdf';
 import { generateLegalAnalysis } from '@/utils/legalAnalysis';
+
+const ANALYSIS_STAGES = [
+  { label: 'Reading document...', progress: 15 },
+  { label: 'Detecting document domain...', progress: 30 },
+  { label: 'Extracting key clauses...', progress: 50 },
+  { label: 'Analyzing with Legal BERT...', progress: 70 },
+  { label: 'Generating risk assessment...', progress: 85 },
+  { label: 'Compiling report...', progress: 95 },
+];
 
 const FreeAnalysis = () => {
   const { toast } = useToast();
   const [file, setFile] = useState<File | null>(null);
   const [analyzing, setAnalyzing] = useState(false);
   const [analysis, setAnalysis] = useState<string | null>(null);
+  const [stage, setStage] = useState(0);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const fileChangeInputRef = useRef<HTMLInputElement>(null);
 
@@ -41,23 +52,29 @@ const FreeAnalysis = () => {
     if (!file) return;
 
     setAnalyzing(true);
+    setStage(0);
     
     try {
       const text = await file.text();
-      
-      // Simulate Legal BERT processing time
-      await new Promise(resolve => setTimeout(resolve, 3000));
+
+      // Progress through stages with delays
+      for (let i = 0; i < ANALYSIS_STAGES.length; i++) {
+        setStage(i);
+        await new Promise(resolve => setTimeout(resolve, 600 + Math.random() * 400));
+      }
       
       const { report } = generateLegalAnalysis(text, file.name);
       
       setAnalysis(report);
       setAnalyzing(false);
+      setStage(0);
       toast({
         title: "Analysis complete",
         description: "Your document has been analyzed successfully",
       });
     } catch (error) {
       setAnalyzing(false);
+      setStage(0);
       toast({
         title: "Analysis failed",
         description: "There was an error analyzing your document",
@@ -253,37 +270,43 @@ const FreeAnalysis = () => {
                     <CheckCircle className="h-6 w-6 text-green-500" />
                   </div>
                   
-                  <div className="flex gap-4">
-                    <Button
-                      onClick={analyzeDocument}
-                      disabled={analyzing}
-                      className="flex-1 shadow-elegant hover:shadow-glow"
-                      variant="hero"
-                    >
-                      {analyzing ? (
-                        <>
-                          <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                          Analyzing with Legal BERT...
-                        </>
-                      ) : (
-                        'Analyze Document'
-                      )}
-                    </Button>
-                    
-                    <Button 
-                      variant="outline"
-                      onClick={() => fileChangeInputRef.current?.click()}
-                    >
-                      Change File
-                    </Button>
-                    <input
-                      ref={fileChangeInputRef}
-                      type="file"
-                      className="hidden"
-                      accept=".pdf,.doc,.docx,.txt,.jpg,.jpeg,.png"
-                      onChange={handleFileChange}
-                    />
-                  </div>
+                  {analyzing ? (
+                    <div className="space-y-3 p-4 bg-secondary/10 rounded-lg border border-border/50">
+                      <div className="flex items-center gap-3">
+                        <Loader2 className="h-5 w-5 animate-spin text-primary" />
+                        <span className="font-medium text-sm">{ANALYSIS_STAGES[stage]?.label}</span>
+                      </div>
+                      <Progress value={ANALYSIS_STAGES[stage]?.progress || 0} className="h-2" />
+                      <div className="flex justify-between text-xs text-muted-foreground">
+                        <span>Stage {stage + 1} of {ANALYSIS_STAGES.length}</span>
+                        <span>{ANALYSIS_STAGES[stage]?.progress}%</span>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="flex gap-4">
+                      <Button
+                        onClick={analyzeDocument}
+                        className="flex-1 shadow-elegant hover:shadow-glow"
+                        variant="hero"
+                      >
+                        Analyze Document
+                      </Button>
+                      
+                      <Button 
+                        variant="outline"
+                        onClick={() => fileChangeInputRef.current?.click()}
+                      >
+                        Change File
+                      </Button>
+                      <input
+                        ref={fileChangeInputRef}
+                        type="file"
+                        className="hidden"
+                        accept=".pdf,.doc,.docx,.txt,.jpg,.jpeg,.png"
+                        onChange={handleFileChange}
+                      />
+                    </div>
+                  )}
                 </div>
               )}
             </CardContent>
