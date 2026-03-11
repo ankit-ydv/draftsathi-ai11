@@ -1,11 +1,20 @@
+import { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Heart, FileText, Plus, Upload, Brain, Download, ArrowRight } from 'lucide-react';
+import { Heart, FileText, Plus, Upload, Brain, Download, ArrowRight, Send } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
+import { Label } from '@/components/ui/label';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
+import { useToast } from '@/hooks/use-toast';
 import Header from '@/components/Header';
 
 const LandingPage = () => {
   const navigate = useNavigate();
+  const { toast } = useToast();
+  const [domainDialogOpen, setDomainDialogOpen] = useState(false);
+  const [domainRequest, setDomainRequest] = useState({ name: '', email: '', domain: '', description: '' });
 
   const domains = [
     {
