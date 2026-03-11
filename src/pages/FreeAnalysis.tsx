@@ -208,7 +208,7 @@ const FreeAnalysis = () => {
                       ref={fileChangeInputRef}
                       type="file"
                       className="hidden"
-                      accept=".pdf,.doc,.docx,.txt"
+                      accept=".pdf,.doc,.docx,.txt,.jpg,.jpeg,.png"
                       onChange={handleFileChange}
                     />
                   </div>
