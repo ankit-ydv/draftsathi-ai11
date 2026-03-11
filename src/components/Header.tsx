@@ -1,8 +1,12 @@
 import { Button } from "@/components/ui/button";
-import { Scale } from "lucide-react";
+import { Scale, ArrowLeft } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 
-const Header = () => {
+interface HeaderProps {
+  showBack?: boolean;
+}
+
+const Header = ({ showBack = false }: HeaderProps) => {
   const navigate = useNavigate();
 
   const scrollToSection = (sectionId: string) => {
@@ -20,15 +24,27 @@ const Header = () => {
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 items-center justify-between px-6">
-        {/* Logo */}
-        <Link to="/" className="flex items-center space-x-2">
-          <div className="rounded-lg bg-gradient-to-r from-primary to-primary-glow p-2">
-            <Scale className="h-6 w-6 text-primary-foreground" />
-          </div>
-          <span className="text-xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-            DraftSathi AI
-          </span>
-        </Link>
+        {/* Left: Back + Logo */}
+        <div className="flex items-center gap-3">
+          {showBack && (
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => navigate(-1)}
+              className="hover:bg-secondary/50"
+            >
+              <ArrowLeft className="h-5 w-5" />
+            </Button>
+          )}
+          <Link to="/" className="flex items-center space-x-2">
+            <div className="rounded-lg bg-gradient-to-r from-primary to-primary-glow p-2">
+              <Scale className="h-6 w-6 text-primary-foreground" />
+            </div>
+            <span className="text-xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+              DraftSathi AI
+            </span>
+          </Link>
+        </div>
 
         {/* Navigation */}
         <nav className="hidden md:flex items-center space-x-8">
