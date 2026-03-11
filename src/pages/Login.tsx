@@ -31,7 +31,7 @@ const Login = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-secondary/30 to-accent/10">
-      <Header />
+      <Header showBack />
       
       <section className="pt-20 pb-20 px-6">
         <div className="container max-w-md mx-auto">
