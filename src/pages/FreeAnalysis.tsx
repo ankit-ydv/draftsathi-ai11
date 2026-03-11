@@ -30,7 +30,7 @@ const FreeAnalysis = () => {
       } else {
         toast({
           title: "Invalid file type",
-          description: "Please upload a PDF, DOC, DOCX, or TXT file",
+          description: "Please upload a PDF, DOC, DOCX, TXT, JPG, or PNG file",
           variant: "destructive",
         });
       }
