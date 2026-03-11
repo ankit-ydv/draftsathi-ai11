@@ -270,36 +270,41 @@ const FreeAnalysis = () => {
                     <CheckCircle className="h-6 w-6 text-green-500" />
                   </div>
                   
-                  <div className="flex gap-4">
-                    <Button
-                      onClick={analyzeDocument}
-                      disabled={analyzing}
-                      className="flex-1 shadow-elegant hover:shadow-glow"
-                      variant="hero"
-                    >
-                      {analyzing ? (
-                        <>
-                          <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                          Analyzing with Legal BERT...
-                        </>
-                      ) : (
-                        'Analyze Document'
-                      )}
-                    </Button>
-                    
-                    <Button 
-                      variant="outline"
-                      onClick={() => fileChangeInputRef.current?.click()}
-                    >
-                      Change File
-                    </Button>
-                    <input
-                      ref={fileChangeInputRef}
-                      type="file"
-                      className="hidden"
-                      accept=".pdf,.doc,.docx,.txt,.jpg,.jpeg,.png"
-                      onChange={handleFileChange}
-                    />
+                  {analyzing ? (
+                    <div className="space-y-3 p-4 bg-secondary/10 rounded-lg border border-border/50">
+                      <div className="flex items-center gap-3">
+                        <Loader2 className="h-5 w-5 animate-spin text-primary" />
+                        <span className="font-medium text-sm">{ANALYSIS_STAGES[stage]?.label}</span>
+                      </div>
+                      <Progress value={ANALYSIS_STAGES[stage]?.progress || 0} className="h-2" />
+                      <div className="flex justify-between text-xs text-muted-foreground">
+                        <span>Stage {stage + 1} of {ANALYSIS_STAGES.length}</span>
+                        <span>{ANALYSIS_STAGES[stage]?.progress}%</span>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="flex gap-4">
+                      <Button
+                        onClick={analyzeDocument}
+                        className="flex-1 shadow-elegant hover:shadow-glow"
+                        variant="hero"
+                      >
+                        Analyze Document
+                      </Button>
+                      
+                      <Button 
+                        variant="outline"
+                        onClick={() => fileChangeInputRef.current?.click()}
+                      >
+                        Change File
+                      </Button>
+                      <input
+                        ref={fileChangeInputRef}
+                        type="file"
+                        className="hidden"
+                        accept=".pdf,.doc,.docx,.txt,.jpg,.jpeg,.png"
+                        onChange={handleFileChange}
+                      />
                   </div>
                 </div>
               )}
