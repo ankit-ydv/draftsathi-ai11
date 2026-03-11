@@ -169,6 +169,7 @@ const LandingPage = () => {
                         variant="outline" 
                         size="sm"
                         className="hover:bg-accent/10 border-accent/30"
+                        onClick={() => setDomainDialogOpen(true)}
                       >
                         Request Domain
                       </Button>
