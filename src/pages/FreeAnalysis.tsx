@@ -4,14 +4,25 @@ import { Button } from '@/components/ui/button';
 import { Upload, FileText, Download, Loader2, CheckCircle } from 'lucide-react';
 import Header from '@/components/Header';
 import { useToast } from '@/hooks/use-toast';
+import { Progress } from '@/components/ui/progress';
 import jsPDF from 'jspdf';
 import { generateLegalAnalysis } from '@/utils/legalAnalysis';
+
+const ANALYSIS_STAGES = [
+  { label: 'Reading document...', progress: 15 },
+  { label: 'Detecting document domain...', progress: 30 },
+  { label: 'Extracting key clauses...', progress: 50 },
+  { label: 'Analyzing with Legal BERT...', progress: 70 },
+  { label: 'Generating risk assessment...', progress: 85 },
+  { label: 'Compiling report...', progress: 95 },
+];
 
 const FreeAnalysis = () => {
   const { toast } = useToast();
   const [file, setFile] = useState<File | null>(null);
   const [analyzing, setAnalyzing] = useState(false);
   const [analysis, setAnalysis] = useState<string | null>(null);
+  const [stage, setStage] = useState(0);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const fileChangeInputRef = useRef<HTMLInputElement>(null);
 
