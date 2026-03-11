@@ -345,6 +345,75 @@ const LandingPage = () => {
           </div>
         </div>
       </footer>
+      {/* Request Domain Dialog */}
+      <Dialog open={domainDialogOpen} onOpenChange={setDomainDialogOpen}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle>Request a New Domain</DialogTitle>
+            <DialogDescription>
+              Tell us about the legal domain you'd like us to add. We'll review your request and get back to you.
+            </DialogDescription>
+          </DialogHeader>
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              toast({
+                title: "Request submitted!",
+                description: `We've received your request for "${domainRequest.domain}". We'll review it and notify you at ${domainRequest.email}.`,
+              });
+              setDomainDialogOpen(false);
+              setDomainRequest({ name: '', email: '', domain: '', description: '' });
+            }}
+            className="space-y-4"
+          >
+            <div className="space-y-2">
+              <Label htmlFor="req-name">Your Name</Label>
+              <Input
+                id="req-name"
+                placeholder="John Doe"
+                value={domainRequest.name}
+                onChange={(e) => setDomainRequest(prev => ({ ...prev, name: e.target.value }))}
+                required
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="req-email">Email Address</Label>
+              <Input
+                id="req-email"
+                type="email"
+                placeholder="john@example.com"
+                value={domainRequest.email}
+                onChange={(e) => setDomainRequest(prev => ({ ...prev, email: e.target.value }))}
+                required
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="req-domain">Domain Name</Label>
+              <Input
+                id="req-domain"
+                placeholder="e.g., Maritime Law, Immigration Law"
+                value={domainRequest.domain}
+                onChange={(e) => setDomainRequest(prev => ({ ...prev, domain: e.target.value }))}
+                required
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="req-desc">Description (Optional)</Label>
+              <Textarea
+                id="req-desc"
+                placeholder="Describe what types of documents you'd like analyzed..."
+                value={domainRequest.description}
+                onChange={(e) => setDomainRequest(prev => ({ ...prev, description: e.target.value }))}
+                rows={3}
+              />
+            </div>
+            <Button type="submit" variant="hero" className="w-full shadow-elegant hover:shadow-glow">
+              <Send className="mr-2 h-4 w-4" />
+              Submit Request
+            </Button>
+          </form>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
