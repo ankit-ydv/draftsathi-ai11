@@ -305,10 +305,10 @@ const FreeAnalysis = () => {
                         accept=".pdf,.doc,.docx,.txt,.jpg,.jpeg,.png"
                         onChange={handleFileChange}
                       />
-                  </div>
+                    </div>
+                  )}
                 </div>
               )}
-            </CardContent>
           </Card>
 
           {/* Analysis Results */}
