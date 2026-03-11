@@ -309,6 +309,7 @@ const FreeAnalysis = () => {
                   )}
                 </div>
               )}
+            </CardContent>
           </Card>
 
           {/* Analysis Results */}
