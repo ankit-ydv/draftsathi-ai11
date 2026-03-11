@@ -148,7 +148,7 @@ const FreeAnalysis = () => {
                   <FileText className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
                   <p className="text-lg font-medium mb-2">Choose a file to analyze</p>
                   <p className="text-sm text-muted-foreground mb-4">
-                    Supports PDF, DOC, DOCX, and TXT files
+                    Supports PDF, DOC, DOCX, TXT, JPG, and PNG files
                   </p>
                   <div>
                     <Button 
