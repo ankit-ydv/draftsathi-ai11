@@ -19,7 +19,7 @@ const FreeAnalysis = () => {
     const selectedFile = e.target.files?.[0];
     if (selectedFile) {
       // Validate file type
-      const validTypes = ['application/pdf', 'text/plain', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
+      const validTypes = ['application/pdf', 'text/plain', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'image/jpeg', 'image/png'];
       if (validTypes.includes(selectedFile.type)) {
         setFile(selectedFile);
         setAnalysis(null);
@@ -30,7 +30,7 @@ const FreeAnalysis = () => {
       } else {
         toast({
           title: "Invalid file type",
-          description: "Please upload a PDF, DOC, DOCX, or TXT file",
+          description: "Please upload a PDF, DOC, DOCX, TXT, JPG, or PNG file",
           variant: "destructive",
         });
       }
@@ -148,7 +148,7 @@ const FreeAnalysis = () => {
                   <FileText className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
                   <p className="text-lg font-medium mb-2">Choose a file to analyze</p>
                   <p className="text-sm text-muted-foreground mb-4">
-                    Supports PDF, DOC, DOCX, and TXT files
+                    Supports PDF, DOC, DOCX, TXT, JPG, and PNG files
                   </p>
                   <div>
                     <Button 
@@ -163,7 +163,7 @@ const FreeAnalysis = () => {
                       ref={fileInputRef}
                       type="file"
                       className="hidden"
-                      accept=".pdf,.doc,.docx,.txt"
+                      accept=".pdf,.doc,.docx,.txt,.jpg,.jpeg,.png"
                       onChange={handleFileChange}
                     />
                   </div>
@@ -208,7 +208,7 @@ const FreeAnalysis = () => {
                       ref={fileChangeInputRef}
                       type="file"
                       className="hidden"
-                      accept=".pdf,.doc,.docx,.txt"
+                      accept=".pdf,.doc,.docx,.txt,.jpg,.jpeg,.png"
                       onChange={handleFileChange}
                     />
                   </div>
