@@ -1,6 +1,8 @@
 import { Button } from "@/components/ui/button";
-import { Scale, ArrowLeft } from "lucide-react";
+import { Scale, ArrowLeft, LogOut } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "@/contexts/AuthContext";
+import { useToast } from "@/hooks/use-toast";
 
 interface HeaderProps {
   showBack?: boolean;
@@ -8,6 +10,8 @@ interface HeaderProps {
 
 const Header = ({ showBack = false }: HeaderProps) => {
   const navigate = useNavigate();
+  const { user, signOut } = useAuth();
+  const { toast } = useToast();
 
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
@@ -19,6 +23,12 @@ const Header = ({ showBack = false }: HeaderProps) => {
   const handleAboutClick = () => {
     navigate('/');
     setTimeout(() => scrollToSection('how-it-works'), 100);
+  };
+
+  const handleSignOut = async () => {
+    await signOut();
+    toast({ title: "Signed out", description: "You've been signed out successfully" });
+    navigate('/');
   };
 
   return (
@@ -68,15 +78,32 @@ const Header = ({ showBack = false }: HeaderProps) => {
           </Link>
         </nav>
 
-        {/* CTA Button */}
-        <div className="flex items-center space-x-4">
-          <Button 
-            variant="hero"
-            onClick={() => navigate('/get-started')}
-            className="shadow-elegant hover:shadow-glow transition-all duration-300"
-          >
-            Get Started
-          </Button>
+        {/* CTA / User Actions */}
+        <div className="flex items-center space-x-3">
+          {user ? (
+            <>
+              <span className="hidden md:inline text-sm text-muted-foreground truncate max-w-[150px]">
+                {user.email}
+              </span>
+              <Button 
+                variant="outline"
+                size="sm"
+                onClick={handleSignOut}
+                className="hover:bg-secondary/50"
+              >
+                <LogOut className="h-4 w-4 mr-1" />
+                Sign Out
+              </Button>
+            </>
+          ) : (
+            <Button 
+              variant="hero"
+              onClick={() => navigate('/get-started')}
+              className="shadow-elegant hover:shadow-glow transition-all duration-300"
+            >
+              Get Started
+            </Button>
+          )}
         </div>
       </div>
 
